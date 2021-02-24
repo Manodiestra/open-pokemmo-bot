@@ -1,20 +1,10 @@
 import pyautogui
 import time
+import findPokemon
 
 DELAY_BETWEEN_COMMANDS = 1
 
-def main():
-
-    # Initialize PyAutoGUI
-    pyautogui.FAILSAFE = True
-
-    # Countdown timer
-    print("Starting", end="")
-    for i in range(0, 10):
-        print(".", end="")
-        time.sleep(1)
-    print("Go")
-
+def getToPosition():
     # Get to the stairs
     holdKey('left')
     
@@ -29,15 +19,64 @@ def main():
 
     # Use sweet scent
     moveMouseAndClick(1206, 599, 'left')
+
+def returnToPokeCenter():
+    # Turns away from the water
+    holdKey('left', 0.4)
+
+    # Get up the stairs
+    holdKey('up')
+
+    # Get to the PokeCenter door
+    holdKey('right')
+
+    # Enter the door
+    holdKey('up')
+
+def talkToNurse():
+    # Start conversation with the nurse
+    pressKey('z', 7, 5)
+
+    # Go back to the entrance
+    holdKey('down')
+
+def listener():
+    if(findPokemon.find_pokemon('shelmet')):
+        # Countdown timer
+        for i in range(0, 4):
+            # Use the attacks
+            pressKey('z')
+            pressKey('right')
+            pressKey('z', 2)
+            time.sleep(15)
+
+    # Move mouse to the pokemon with sweet scent
+    moveMouseAndClick(1335, 443, 'left')
+    # Use sweet scent
+    moveMouseAndClick(1206, 599, 'left')
+
+    if(findPokemon.find_pokemon('noPP')):
+        returnToPokeCenter()
+        talkToNurse()
+        getToPosition()
+
+def main():
+    # Initialize PyAutoGUI
+    pyautogui.FAILSAFE = True
+
+    # Countdown timer
+    print("Starting", end="")
+    for i in range(0, 10):
+        print(".", end="")
+        time.sleep(1)
+    print("Go")
     
-    # Wait for the battle to start
-    time.sleep(15)
+    getToPosition()
 
-    # Use the attacks
-    pressKey('z')
-    pressKey('right')
-    pressKey('z', 2)
-
+    while (True):
+        # Wait for the battle to start
+        time.sleep(15)
+        listener()
     # Done
     print("Done")
 
