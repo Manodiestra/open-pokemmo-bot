@@ -28,10 +28,10 @@ def returnToPokeCenter():
     holdKey('up')
 
     # Get to the PokeCenter door
-    holdKey('right')
+    holdKey('right', 0.65)
 
     # Enter the door
-    holdKey('up')
+    holdKey('up', 4)
 
 def talkToNurse():
     # Start conversation with the nurse
@@ -40,25 +40,34 @@ def talkToNurse():
     # Go back to the entrance
     holdKey('down')
 
-def listener():
-    if(findPokemon.find_pokemon('shelmet')):
-        # Countdown timer
+    # Mount the bike
+    pressKey('3')
+
+def listener(cont):
+    cont = cont + 1
+
+    if(cont < 5):
+         # Countdown timer
         for i in range(0, 4):
             # Use the attacks
-            pressKey('z')
-            pressKey('right')
-            pressKey('z', 2)
-            time.sleep(15)
+            if(i < 2):
+                pressKey('z')
+                pressKey('right')
+                pressKey('z', 2)
+                time.sleep(15)
+            else:
+                pressKey('z', 3, 2)
+                time.sleep(15)
 
-    # Move mouse to the pokemon with sweet scent
-    moveMouseAndClick(1335, 443, 'left')
-    # Use sweet scent
-    moveMouseAndClick(1206, 599, 'left')
-
-    if(findPokemon.find_pokemon('noPP')):
+        # Move mouse to the pokemon with sweet scent
+        moveMouseAndClick(1335, 443, 'left')
+        # Use sweet scent
+        moveMouseAndClick(1206, 599, 'left')
+    else:
         returnToPokeCenter()
         talkToNurse()
-        getToPosition()
+
+    return cont
 
 def main():
     # Initialize PyAutoGUI
@@ -72,11 +81,14 @@ def main():
     print("Go")
     
     getToPosition()
+    cont = 0
 
     while (True):
         # Wait for the battle to start
         time.sleep(15)
-        listener()
+        cont = listener(cont)
+        if cont == 5:
+            cont = 0
     # Done
     print("Done")
 
@@ -89,7 +101,7 @@ def holdKey(key, seconds=1):
 def pressKey(key, times = 1, interval = 1):
     for i in range(0, times):
         pyautogui.press(key)
-        time.sleep(DELAY_BETWEEN_COMMANDS)
+        time.sleep(interval)
 
 def moveMouse(x, y):
     pyautogui.moveTo(x, y)
