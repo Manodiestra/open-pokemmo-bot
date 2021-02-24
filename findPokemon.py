@@ -34,25 +34,7 @@ if locations:
 
     cv.imshow('Matches', haystack_img)
     cv.waitKey()
-    #cv.imwrite('result.jpg', haystack_img)
 
 else:
     print('Needle not found.')
-
-'''
-if max_val >= threshold:
-    print('Found')
-
-    poke_w = needle_img.shape[1]
-    poke_h = needle_img.shape[0]
-
-    top_left = max_loc
-    bottom_right = (top_left[0] + poke_w, top_left[1] + poke_h)
-
-    cv.rectangle(haystack_img, top_left, bottom_right,
-                color=(0, 255, 0), thickness=2, lineType=cv.LINE_4)
-    cv.imshow('Result', haystack_img)
-    cv.waitKey()
-else:
-    print('Not found')
-'''
+    
