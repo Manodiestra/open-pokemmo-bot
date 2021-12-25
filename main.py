@@ -29,45 +29,6 @@ def checkTrainer():
     time.sleep(1 + randomeTime() * 3)
     pressKey('c')
 
-def getToPosition():
-    # Get to the stairs
-    holdKey('left')
-    
-    # Get down the stairs
-    holdKey('down')
-    
-    # Turn towards the water
-    holdKey('right', 0.4)
-
-    # Move mouse to the pokemon with sweet scent
-    moveMouseAndClick(1335, 443, 'left')
-
-    # Use sweet scent
-    moveMouseAndClick(1206, 599, 'left')
-
-def returnToPokeCenter():
-    # Turns away from the water
-    holdKey('left', 0.4)
-
-    # Get up the stairs
-    holdKey('up')
-
-    # Get to the PokeCenter door
-    holdKey('right', 0.65)
-
-    # Enter the door
-    holdKey('up', 4)
-
-def talkToNurse():
-    # Start conversation with the nurse
-    pressKey('z', 7, 5)
-
-    # Go back to the entrance
-    holdKey('down')
-
-    # Mount the bike
-    pressKey('3')
-
 def listener(cont):
     cont = cont + 1
 
