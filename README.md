@@ -1,30 +1,26 @@
 # Open PokeMMO Bot #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+## Running the bot ##
+### Requirements ###
 
-### What is this repository for? ###
-
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* python 3
+* pip 3
 
 ### How do I get set up? ###
-
-* Summary of set up
-* Configuration
-* Dependencies
+* clone the repo
+`git clone https://bitbucket.org:Manodiestra0/open-pokemmo-bot.git`
+* move into repo
+`cd open-pokemmo-bot`
+* create python virtual environment (optional)
+'python -m venv open_pokemmo`
+* install dependancies
+`python -m pip install pyautogui opencv-python`
 Linux requires sudo apt-get install scrot for screenshots
-* Database configuration
-* How to run tests
-* Deployment instructions
 
 ### Contribution guidelines ###
 
-* Writing tests
-* Code review
-* Other guidelines
+You can submit a pull request
 
 ### Who do I talk to? ###
 
-* Repo owner or admin
-* Other community or team contact
+If you have any questions or find a but please open an issue.
