@@ -13,6 +13,7 @@ This README would normally document whatever steps are necessary to get your app
 * Summary of set up
 * Configuration
 * Dependencies
+Linux requires sudo apt-get install scrot for screenshots
 * Database configuration
 * How to run tests
 * Deployment instructions
