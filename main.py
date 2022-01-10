@@ -1,6 +1,5 @@
 import pyautogui
 import time
-import findPokemon
 import sys
 import random
 
@@ -29,32 +28,6 @@ def checkTrainer():
     time.sleep(1 + randomeTime() * 3)
     pressKey('c')
 
-def listener(cont):
-    cont = cont + 1
-
-    if(cont < 5):
-         # Countdown timer
-        for i in range(0, 4):
-            # Use the attacks
-            if(i < 2):
-                pressKey('z')
-                pressKey('right')
-                pressKey('z', 2)
-                time.sleep(15)
-            else:
-                pressKey('z', 3, 2)
-                time.sleep(15)
-
-        # Move mouse to the pokemon with sweet scent
-        moveMouseAndClick(1335, 443, 'left')
-        # Use sweet scent
-        moveMouseAndClick(1206, 599, 'left')
-    else:
-        returnToPokeCenter()
-        talkToNurse()
-
-    return cont
-
 def talkToReceptionist():
     print('Talking to receptionist')
     pressKey('z', 10, 1.1)
@@ -73,11 +46,11 @@ def catchFish():
     fled = False
     for i in range(0, 4):
         fledResult = pyautogui.locateOnScreen('poke_img/fled_from.png')
-        print('FLED:', fledResult)
         if (fledResult != None):
             fled = True
             break
     if (fled):
+        print('FLED:', fledResult)
         return 'failed'
     else:
         time.sleep(.5)
@@ -110,6 +83,13 @@ def tryToFish():
             pressKey('esc')
             return result
         else:
+            # Wait to make sure the "Fled" message
+            # wasn't missied
+            time.sleep(12.6 + randomeTime())
+            pokeSummary = pyautogui.locateOnScreen('poke_img/pokemon_summary.png')
+            if (pokeSummary != None):
+                # The pokemon was caught
+                result = "success"
             return result
     else:
         pressKey('z')
@@ -153,6 +133,20 @@ def kantoFish():
     pressKey('esc')
     pressKey('z', 3)
 
+def walkToIsland2Grass():
+    # Mount bike
+    pressKey('4')
+    # Ride to spot
+    holdKey('d', .55)
+    holdKey('w', .35)
+    holdKey('d', .7)
+    holdKey('w', 1)
+    holdKey('a', .7)
+    holdKey('w', 1)
+
+def island2Payday():
+    walkToIsland2Grass()
+
 def main():
     # Initialize PyAutoGUI
     pyautogui.FAILSAFE = True
@@ -165,16 +159,11 @@ def main():
         print("Fishing...")
         startCountDown()
         simpleFishLoop()
+    elif (sys.argv[1] == "payday"):
+        print("Payday time...")
+        startCountDown()
+        island2Payday()
 
-    # getToPosition()
-    # cont = 0
-    # while (True):
-    #     # Wait for the battle to start
-    #     time.sleep(15)
-    #     cont = listener(cont)
-    #     if cont == 5:
-    #         cont = 0
-    # Done
     print("Done")
 
 
