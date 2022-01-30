@@ -30,7 +30,7 @@ def checkTrainer():
 
 def talkToReceptionist():
     print('Talking to receptionist')
-    pressKey('z', 10, 1.1)
+    pressKey('space', 10, 1.1)
     time.sleep(1.4)
 
 def walkToFishingSpot():
@@ -41,7 +41,7 @@ def walkToFishingSpot():
 
 def catchFish():
     pressKey('s')
-    pressKey('z')
+    pressKey('space')
     #Check if the magikarp fled
     fled = False
     for i in range(0, 4):
@@ -54,7 +54,7 @@ def catchFish():
         return 'failed'
     else:
         time.sleep(.5)
-        pressKey('z')
+        pressKey('space')
         return 'success'
 
 def tryToFish():
@@ -71,7 +71,7 @@ def tryToFish():
         hooked = True
     if (hooked):
         # Dismiss "Landed a Pokemon" message
-        pressKey('z')
+        pressKey('space')
         # Wait for battle to start
         time.sleep(5.9)
         result = catchFish()
@@ -92,7 +92,7 @@ def tryToFish():
                 result = "success"
             return result
     else:
-        pressKey('z')
+        pressKey('space')
         return 'failed'
 
 def simpleFishLoop():
@@ -131,7 +131,7 @@ def kantoFish():
     # Finish safari sequence
     time.sleep(1)
     pressKey('esc')
-    pressKey('z', 3)
+    pressKey('space', 3)
 
 def walkToIsland2Grass():
     # Mount bike
