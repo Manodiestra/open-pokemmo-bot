@@ -3,7 +3,8 @@ import time
 import sys
 import random
 
-DELAY_BETWEEN_COMMANDS = .1
+from utils import *
+from constants import *
 
 def startCountDown():
     # Countdown timer
@@ -147,6 +148,14 @@ def walkToIsland2Grass():
 def island2Payday():
     walkToIsland2Grass()
 
+def walkToIsland5Grass():
+    # Mount bike
+    pressKey('4')
+    # Ride to spot
+
+def island5Payday():
+    walkToIsland5Grass()
+
 def main():
     # Initialize PyAutoGUI
     pyautogui.FAILSAFE = True
@@ -167,24 +176,6 @@ def main():
     print("Done")
 
 
-def holdKey(key, seconds=1):
-    pyautogui.keyDown(key)
-    time.sleep(seconds)
-    pyautogui.keyUp(key)
-    time.sleep(DELAY_BETWEEN_COMMANDS)
-
-def pressKey(key, times = 1, interval = 1):
-    for i in range(0, times):
-        pyautogui.press(key)
-        time.sleep(interval)
-
-def moveMouse(x, y):
-    pyautogui.moveTo(x, y)
-    time.sleep(DELAY_BETWEEN_COMMANDS)
-
-def moveMouseAndClick(x, y, button):
-    pyautogui.click(x=x, y=y, button=button)
-    time.sleep(DELAY_BETWEEN_COMMANDS)
 
 if __name__ == "__main__":
     main()
