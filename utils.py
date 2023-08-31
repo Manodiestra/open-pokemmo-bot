@@ -1,3 +1,5 @@
+import pyautogui
+
 def pressKey(key, times = 1, interval = 1):
     for i in range(0, times):
         pyautogui.press(key)
