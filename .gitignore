@@ -1,3 +1,6 @@
+# VS Code
+.vscode/*
+
 # Python virtual environment
 env_pokemmo/*
 

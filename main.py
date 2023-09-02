@@ -5,92 +5,82 @@ import random
 
 from utils import *
 from constants import *
-
-def startCountDown():
-    # Countdown timer
-    print("Starting", end="")
-    for i in range(0, 3):
-        print(".", end="")
-        time.sleep(1)
-    print("Go")
-
-def randomeTime():
-    return random.randrange(5, 100) / 100
+from config import *
 
 def checkPokedex():
     time.sleep(.2)
     pressKey('n')
-    time.sleep(1 + randomeTime() * 3)
+    time.sleep(1 + randomTime() * 3)
     pressKey('n')
 
 def checkTrainer():
     time.sleep(.2)
     pressKey('c')
-    time.sleep(1 + randomeTime() * 3)
+    time.sleep(1 + randomTime() * 3)
     pressKey('c')
 
 def talkToReceptionist():
     print('Talking to receptionist')
-    pressKey('space', 10, 1.1)
+    pressKey('space', 11, 1.1)
     time.sleep(1.4)
 
 def walkToFishingSpot():
     print('Walk to fishing spot')
-    holdKey('w', 1.8)
-    holdKey('d', 1)
+    holdKey('w', 2.2)
+    holdKey('d', 1.4)
     holdKey('w', .4)
 
 def catchFish():
     pressKey('s')
     pressKey('space')
-    #Check if the magikarp fled
-    fled = False
+    # Check if the magikarp fled
     for i in range(0, 4):
-        fledResult = pyautogui.locateOnScreen('poke_img/fled_from.png')
+        fledResult = pyautogui.locateOnScreen('poke_img/720_fled_from.png')
         if (fledResult != None):
-            fled = True
-            break
-    if (fled):
-        print('FLED:', fledResult)
-        return 'failed'
+            print('FLED:', fledResult)
+            return 'failed'
     else:
         time.sleep(.5)
         pressKey('space')
-        return 'success'
+        # verify pokemon summary is shown
+        time.sleep(13)
+        for i in range(3):
+            pokeSummaryShown = pyautogui.locateOnScreen('poke_img/720_pokemon_summary_' + str(i) + '.png')
+            if (pokeSummaryShown != None):
+                print('Pokemon Summary', pokeSummaryShown)
+                return 'success'
+        return 'failed'
 
 def tryToFish():
     print('Try to catch a fish')
     # Randomize start time
-    time.sleep(randomeTime())
-    pressKey('2')
+    time.sleep(randomTime())
+    pressKey(OLD_ROD_KEY)
     # Wait for fishing timer
     time.sleep(2.2)
     # Check if fish was hooked
-    notHooked = pyautogui.locateOnScreen('poke_img/Not_even_a_nibble.png')
+    for i in range(4):
+        noFishHooked = pyautogui.locateOnScreen('poke_img/720_not_even_a_nibble_' + str(i) + '.png')
+        fishIsHooked = pyautogui.locateOnScreen('poke_img/720_landed_a_pokemon_' + str(i) + '.png')
+        print('hooked', fishIsHooked, noFishHooked)
+        if (noFishHooked != None or fishIsHooked != None):
+            break
     hooked = False
-    if (notHooked == None):
+    if (fishIsHooked != None):
         hooked = True
+    elif (noFishHooked == None):
+        return 'Failed to identify hook'
     if (hooked):
+        print('Fish is hooked!')
         # Dismiss "Landed a Pokemon" message
         pressKey('space')
         # Wait for battle to start
         time.sleep(5.9)
         result = catchFish()
         if (result == 'success'):
-            # Wait for catch and pokemon summary
-            # to pop up
-            time.sleep(12.6 + randomeTime())
+            time.sleep(randomTime())
             # Dismiss summary screen
             pressKey('esc')
-            return result
-        else:
-            # Wait to make sure the "Fled" message
-            # wasn't missied
-            time.sleep(12.6 + randomeTime())
-            pokeSummary = pyautogui.locateOnScreen('poke_img/pokemon_summary.png')
-            if (pokeSummary != None):
-                # The pokemon was caught
-                result = "success"
             return result
     else:
         pressKey('space')
@@ -109,6 +99,8 @@ def simpleFishLoop():
         print('Fish result:', result)
         if (result == 'success'):
             numFish -= 1
+        if (result == 'Failed to identify hook'):
+            return
 
 def kantoFish():
     print('Begin Kanto safari fish!')
@@ -120,7 +112,7 @@ def kantoFish():
     # start fishing loop
     numFish = 30
     while(numFish > 0):
-        num = randomeTime()
+        num = randomTime()
         if (num < .08):
             checkPokedex()
         elif (num > .95):
@@ -129,6 +121,8 @@ def kantoFish():
         print('Fish result:', result)
         if (result == 'success'):
             numFish -= 1
+        if (result == 'Failed to identify hook'):
+            return
     # Finish safari sequence
     time.sleep(1)
     pressKey('esc')
